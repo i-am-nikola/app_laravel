@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,5 +13,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.home.index');
+});
+
+Route::prefix('admin')->group(function () {
+    Route::prefix('user')->group(function () {
+        Route::get('add', 'UserController@getAdd')->name('admin.user.add');
+    });
 });
