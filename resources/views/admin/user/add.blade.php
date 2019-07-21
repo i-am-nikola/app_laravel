@@ -5,17 +5,14 @@
 @endsection
 
 @section('content')
-<div class="content-wrapper">
+
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>
-      General Form Elements
-      <small>Preview</small>
-    </h1>
+    <h1>Quản lý thành viên</h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li><a href="#">Forms</a></li>
-      <li class="active">General Elements</li>
+      <li><a href="#">Quản lý thành viên</a></li>
+      <li class="active">Thêm thành viên</li>
     </ol>
   </section>
 
@@ -23,47 +20,63 @@
   <section class="content">
     <div class="row">
       <!-- left column -->
-      <div class="col-md-6">
+      <div class="col-md-9">
         <!-- general form elements -->
         <div class="box box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title">Quick Example</h3>
+            <h3 class="box-title">Thêm thành viên</h3>
           </div>
           <!-- /.box-header -->
           <!-- form start -->
-          <form role="form">
+          {!! Form::open(['method' => 'POST']) !!}
             <div class="box-body">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+              <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+                {!! Form::label('name', 'Họ và tên') !!}
+                {!! Form::text('name', '', ['class' => 'form-control', 'value' => old('name'), 'placeholder' => 'Nhập họ và tên']) !!}
+                @if ($errors->has('name'))  
+                  <span class="help-block">{{ $errors->first('name') }}</span> 
+                @endif
               </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+                {!! Form::label('email', 'Email') !!}
+                {!! Form::text('email', '', ['class' => 'form-control', 'value' => old('email'), 'placeholder' => 'Nhập email']) !!}
+                @if ($errors->has('email'))
+                  <span class="help-block">{{ $errors->first('email') }}</span>
+                @endif
               </div>
-              <div class="form-group">
-                <label for="exampleInputFile">File input</label>
-                <input type="file" id="exampleInputFile">
-
-                <p class="help-block">Example block-level help text here.</p>
+              <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
+                {!! Form::label('password', 'Mật khẩu') !!}
+                {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Nhập mật khẩu']) !!}
+                @if ($errors->has('password'))
+                  <span class="help-block">{{ $errors->first('password') }}</span>
+                @endif
               </div>
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox"> Check me out
-                </label>
+              <div class="form-group {{ $errors->has('re_password') ? 'has-error' : '' }}">
+                {!! Form::label('re_password', 'Nhập lại mật khẩu') !!}
+                {!! Form::password('re_password', ['class' => 'form-control', 'placeholder' => 'Nhập lại mật khẩu']) !!}
+                @if ($errors->has('re_password'))
+                  <span class="help-block">{{ $errors->first('re_password') }}</span>
+                @endif
+              </div>
+              <div class="form-group {{ $errors->has('level') ? 'has-error' : '' }}">
+                {!! Form::label('level', 'Phân quyền') !!}
+                {!! Form::select('level', ['' => 'Phân quyền thành viên', 0 => 'Admin', 1 => 'Member'], [],['class' => 'form-control']) !!}
+                @if ($errors->has('level'))
+                  <span class="help-block">{{ $errors->first('level') }}</span>
+                @endif
               </div>
             </div>
             <!-- /.box-body -->
 
             <div class="box-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              {!! Form::submit('Lưu', ['class' => 'btn btn-primary']) !!}
+              <a href="{{ route('admin.user.list') }}" class="ml-2 btn btn-warning">Quay về</a>
             </div>
-          </form>
+          {!! Form::close() !!}
         </div>
         <!-- /.box -->
       </div>
     </div>
     <!-- /.row -->
   </section>
-</div>
 @endsection

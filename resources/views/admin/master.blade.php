@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,6 +12,8 @@
   <link rel="stylesheet" href="{{ url('admin/bower_components/font-awesome/css/font-awesome.min.css') }}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="{{ url('admin/bower_components/Ionicons/css/ionicons.min.css') }}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{ url('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
   <!-- jvectormap -->
   <link rel="stylesheet" href="{{ url('admin/bower_components/jvectormap/jquery-jvectormap.css') }}">
   <!-- Theme style -->
@@ -20,7 +21,8 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{ url('admin/dist/css/skins/_all-skins.min.css') }}">
-
+<!-- jQuery 3 -->
+<script src="{{ url('admin/bower_components/jquery/dist/jquery.min.js') }}"></script>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -256,7 +258,7 @@
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
-                <span class="hidden-xs">Alexander Pierce</span>
+                <span class="hidden-xs">{{ Auth::user()->name }}</span>
               </a>
               <ul class="dropdown-menu">
                 <!-- User image -->
@@ -264,24 +266,9 @@
                   <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
 
                   <p>
-                    Alexander Pierce - Web Developer
-                    <small>Member since Nov. 2012</small>
+                    {{ Auth::user()->name }}
+                    {{-- <small>Member since Nov. 2012</small> --}}
                   </p>
-                </li>
-                <!-- Menu Body -->
-                <li class="user-body">
-                  <div class="row">
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Followers</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Sales</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Friends</a>
-                    </div>
-                  </div>
-                  <!-- /.row -->
                 </li>
                 <!-- Menu Footer-->
                 <li class="user-footer">
@@ -289,7 +276,7 @@
                     <a href="#" class="btn btn-default btn-flat">Profile</a>
                   </div>
                   <div class="pull-right">
-                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    <a href="{{ route('logout') }}" class="btn btn-default btn-flat">Sign out</a>
                   </div>
                 </li>
               </ul>
@@ -313,7 +300,7 @@
             <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
           </div>
           <div class="pull-left info">
-            <p>Nguyễn Hồng Dững</p>
+            <p>{{ Auth::user()->name }}</p
             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
           </div>
         </div>
@@ -342,12 +329,12 @@
               <i class="fa fa-users"></i>
               <span>Quản lý thành viên</span>
               <span class="pull-right-container">
-                <span class="label label-primary pull-right">4</span>
+                <span class="label label-primary pull-right">{{ $count }}</span>
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="#"><i class="fa fa-circle-o"></i>Danh sách thành viên</a></li>
-              <li><a href="#"><i class="fa fa-circle-o"></i>Thêm thành viên</a></li>
+              <li><a href="{{ route('admin.user.list') }}"><i class="fa fa-circle-o"></i>Danh sách thành viên</a></li>
+              <li><a href="{{ route('admin.user.getAdd') }}"><i class="fa fa-circle-o"></i>Thêm thành viên</a></li>
             </ul>
           </li>
           <li class="treeview">
@@ -388,7 +375,9 @@
     </aside>
     
     <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
       @yield('content')
+    </div>
     <!-- /.content-wrapper -->
 
     <footer class="main-footer">
@@ -598,6 +587,9 @@
   <script src="{{ url('admin/bower_components/jquery/dist/jquery.min.js') }}"></script>
   <!-- Bootstrap 3.3.7 -->
   <script src="{{ url('admin/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+  <!-- DataTables -->
+  <script src="{{ url('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ url('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
   <!-- FastClick -->
   <script src="{{ url('admin/bower_components/fastclick/lib/fastclick.js') }}"></script>
   <!-- AdminLTE App -->
@@ -615,6 +607,9 @@
   <script src="{{ url('admin/dist/js/pages/dashboard2.js') }}"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="{{ url('admin/dist/js/demo.js') }}"></script>
+  <!-- common.js -->
+  <script src="{{ url('js/common.js') }}"></script>
+
 </body>
 
 </html>
