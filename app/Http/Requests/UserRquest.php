@@ -23,13 +23,23 @@ class UserRquest extends FormRequest
    */
   public function rules()
   {
-    return [
-      'name' => 'required',
-      'email' => 'required|unique:users|email',
-      'password' => 'required|min:6|same:re_password',
-      're_password' => 'same:password',
-      'level' => 'required'
-    ];
+    if(!isset($_POST['_method'])){
+      return [
+        'name' => 'required',
+        'email' => 'required|unique:users|email',
+        'password' => 'required|min:6|same:re_password',
+        're_password' => 'same:password',
+        'level' => 'required'
+      ];
+    }else{
+      return [
+        'name' => 'required',
+        'email' => 'required|email',
+        'password' => 'same:re_password',
+        're_password' => 'same:password',
+        'level' => 'required'
+      ];
+    }
   }
 
   public function attributes()

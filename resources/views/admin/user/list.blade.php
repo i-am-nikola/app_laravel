@@ -23,7 +23,7 @@
         @if (Session::has('flash_message'))
           <div class="alert {{ Session::get('flash_level') }} alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <i class="icon fa fa-check"></i> {{ Session::get('flash_message') }}
+            <i class="icon fa {{ (Session::get('flash_level') == 'alert-success') ? 'fa-check' : 'fa-ban' }}"></i> {{ Session::get('flash_message') }}
           </div>
         @endif
         <!-- /.box-header -->
@@ -46,10 +46,18 @@
                     <td>{{ $stt }}</td>
                     <td>{{ $user['name'] }}</td>
                     <td>{{ $user['email'] }}</td>
-                    <td>{{ ($user['level']==0) ? 'Admin' : 'Member'  }}</td>
                     <td>
-                      <a href="{{ route('admin.user.delete', $user['id']) }}" class="btn"><i class="fa fa-edit"></i></a>
-                      <a href="{{ route('admin.user.getEdit', $user['id']) }}" class="btn"><i class="fa fa-trash-o"></i></a>
+                      @if ($user['level'] == 2)
+                        {{ 'Manager' }}
+                      @elseif ($user['level'] == 0)
+                        {{ 'Admin' }}
+                      @else
+                        {{ 'Member' }}
+                      @endif
+                    </td>
+                    <td>
+                      <button class="btn" data-userid={{ $user['id'] }} data-toggle="modal" data-target="#delete"><i class="fa fa-trash-o"></i></button>
+                      <a href="{{ route('admin.user.getEdit', $user['id']) }}" class="btn"><i class="fa fa-edit"></i></a>
                     </td>
                   </tr>
                 <?php $stt++ ?>
@@ -67,4 +75,31 @@
   </div>
   <!-- /.row -->
 </section>
+
+<!-- modal-delete -->
+<div class="modal modal-danger fade" id="delete" style="display: none">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span></button>
+        <h4 class="modal-title text-center">Xóa thành viên</h4>
+      </div>
+      {!! Form::open(['method' => 'DELETE', 'route' => ['admin.user.delete', 'test']]) !!}
+        {!! Form::hidden('userid', '', ['id' => 'user-id']) !!}
+        <div class="modal-body">
+          <p>Đối tượng này sẽ bị xóa vĩnh viễn!</p>
+          <p>Bạn có chắc chắn muốn xóa?</p>
+        </div>
+        
+        <div class="modal-footer">
+          {!! Form::button('Đóng', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']) !!}
+          {!! Form::submit('Xóa', ['class' => 'btn btn-primary']) !!}
+        </div>
+      {!! Form::close() !!}
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
 @endsection
