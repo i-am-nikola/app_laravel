@@ -5,6 +5,21 @@
  */
 
 require('./bootstrap');
+require('admin-lte/bower_components/jquery/dist/jquery.min.js');
+require('admin-lte/bower_components/bootstrap/dist/js/bootstrap.min.js');
+require('admin-lte/bower_components/datatables.net/js/jquery.dataTables.min.js');
+require('admin-lte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js');
+require('admin-lte/bower_components/fastclick/lib/fastclick.js');
+require('admin-lte/dist/js/adminlte.min.js');
+require('admin-lte/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js');
+require('admin-lte/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js');
+require('admin-lte/plugins/jvectormap/jquery-jvectormap-world-mill-en.js');
+require('admin-lte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js');
+require('admin-lte/dist/js/pages/dashboard2.js');
+require('admin-lte/dist/js/demo.js');
+require('admin-lte/plugins/iCheck/icheck.min.js');
+require('admin-lte/bower_components/chart.js/Chart.js');
+require('./common');
 
 window.Vue = require('vue');
 
